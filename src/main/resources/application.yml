@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: course-catalog-service
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5438/businesshelper
+    #    url: jdbc:postgresql://localhost:5432/businesshelper
+    username: root_1
+    password: 12345
+  jpa:
+    #    database: h2
+    #    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop #this recreates the db, not recommended for prod
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  h2:
+    console:
+      enabled: true
+message: Hello from default profile
