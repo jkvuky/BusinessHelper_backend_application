@@ -4,12 +4,12 @@ services:
     image: postgres:11.5
     restart: always
     environment:
-        POSTGRES_USER: root_1
-        POSTGRES_PASSWORD: 12345
-        POSTGRES_DB: businesshelper
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: Winnica52
+       POSTGRES_DB: businesshelper
     logging:
       options:
-        max-size: "10m"
+        max-size: 10m
         max-file: "3"
     ports:
       - '5438:5432'

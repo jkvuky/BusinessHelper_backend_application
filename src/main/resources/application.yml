@@ -5,12 +5,12 @@ spring:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5438/businesshelper
     #    url: jdbc:postgresql://localhost:5432/businesshelper
-    username: root_1
-    password: 12345
+    username: postgres
+    password: Winnica52
   jpa:
-    #    database: h2
-    #    database-platform: org.hibernate.dialect.H2Dialect
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: h2
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop #this recreates the db, not recommended for prod
