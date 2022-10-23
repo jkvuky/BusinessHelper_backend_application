@@ -1,4 +1,4 @@
-package com.business_helper.backend_application.dto
+package com.business_helper.backend_application.dto.event
 
 import javax.validation.constraints.NotBlank
 

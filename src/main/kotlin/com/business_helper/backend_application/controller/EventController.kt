@@ -1,6 +1,7 @@
 package com.business_helper.backend_application.controller
 
-import com.business_helper.backend_application.dto.EventDTO
+import com.business_helper.backend_application.dto.event.DailyEventListDTO
+import com.business_helper.backend_application.dto.event.EventDTO
 import com.business_helper.backend_application.service.EventService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -19,6 +20,11 @@ class EventController(val service: EventService) {
     @GetMapping("/title")
     fun getEventByTitle(@RequestParam("event_name") eventName: String): EventDTO {
         return service.getEventByTitle(eventName)
+    }
+
+    @GetMapping("/daily_events")
+    fun getDailyEvents(@RequestParam("date") date: String, @RequestParam("idUser") idUser: Int): List<DailyEventListDTO> {
+        return service.getDailyEvents(date, idUser)
     }
 
     @PostMapping("/add",

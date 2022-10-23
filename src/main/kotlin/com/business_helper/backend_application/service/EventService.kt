@@ -1,6 +1,8 @@
 package com.business_helper.backend_application.service
 
-import com.business_helper.backend_application.dto.EventDTO
+import com.business_helper.backend_application.dto.event.DailyEventListDTO
+import com.business_helper.backend_application.dto.event.EventDTO
+import com.business_helper.backend_application.dto.event.ShortEventInfoDTO
 import com.business_helper.backend_application.entity.Event
 import com.business_helper.backend_application.exception.EventNotFoundException
 import com.business_helper.backend_application.repository.EventRepository
@@ -15,10 +17,17 @@ class EventService(val repository: EventRepository) {
             .map {
                 EventDTO(
                     id = it.id,
-                    name = it.name,
+                    name = it.clients,
                     description = it.description,
-                    date = it.date,
-                    items = it.items
+                    dateAdd = it.dateAdd,
+                    dateStart = it.dateStart,
+                    dateEnd = it.dateEnd,
+                    image = it.image,
+                    price = it.price,
+                    time = it.time,
+                    eventStatus = it.eventStatus,
+                    eventType = it.eventType,
+                    workers = it.workers
                 )
             }
     }
@@ -26,11 +35,18 @@ class EventService(val repository: EventRepository) {
     fun addEvent(event: EventDTO): EventDTO {
         val eventEntity = event.let {
             Event(
-                id = null,
-                name = it.name,
+                id = it.id,
+                clients = it.name,
                 description = it.description,
-                date = it.date,
-                items = it.items
+                dateAdd = it.dateAdd,
+                dateStart = it.dateStart,
+                dateEnd = it.dateEnd,
+                image = it.image,
+                price = it.price,
+                time = it.time,
+                eventStatus = it.eventStatus,
+                eventType = it.eventType,
+                workers = it.workers
             )
         }
 
@@ -39,10 +55,17 @@ class EventService(val repository: EventRepository) {
         return eventEntity.let {
             EventDTO(
                 id = it.id,
-                name = it.name,
+                name = it.clients,
                 description = it.description,
-                date = it.date,
-                items = it.items
+                dateAdd = it.dateAdd,
+                dateStart = it.dateStart,
+                dateEnd = it.dateEnd,
+                image = it.image,
+                price = it.price,
+                time = it.time,
+                eventStatus = it.eventStatus,
+                eventType = it.eventType,
+                workers = it.workers
             )
         }
     }
@@ -51,18 +74,25 @@ class EventService(val repository: EventRepository) {
 
         val existingEvent = repository.findById(eventId)
 
-         return if (existingEvent.isPresent) {
+        return if (existingEvent.isPresent) {
             existingEvent.get()
                 .let {
-                    it.name = events.name
+                    it.clients = events.name
                     it.description = events.description
-                    it.date = events.date
+                    it.dateAdd = events.dateAdd
                     EventDTO(
                         id = it.id,
-                        name = it.name,
+                        name = it.clients,
                         description = it.description,
-                        date = it.date,
-                        items = it.items
+                        dateAdd = it.dateAdd,
+                        dateStart = it.dateStart,
+                        dateEnd = it.dateEnd,
+                        image = it.image,
+                        price = it.price,
+                        time = it.time,
+                        eventStatus = it.eventStatus,
+                        eventType = it.eventType,
+                        workers = it.workers
                     )
                 }
         } else {
@@ -93,10 +123,38 @@ class EventService(val repository: EventRepository) {
         return event.let {
             EventDTO(
                 id = it.id,
-                name = it.name,
+                name = it.clients,
                 description = it.description,
-                date = it.date,
-                items = it.items
+                dateAdd = it.dateAdd,
+                dateStart = it.dateStart,
+                dateEnd = it.dateEnd,
+                image = it.image,
+                price = it.price,
+                time = it.time,
+                eventStatus = it.eventStatus,
+                eventType = it.eventType,
+                workers = it.workers
+            )
+        }
+    }
+
+    fun getDailyEvents(date: String, idUser: Int): List<DailyEventListDTO> {
+
+        val event = Pair(date, idUser).let {
+            repository.findEventsByDateStartAndWorker(it.first, it.second)
+        }
+        return event.map {
+            DailyEventListDTO(
+                events = listOf(
+                    ShortEventInfoDTO(
+                        id = it.id,
+                        name = it.clients,
+                        workers = it.workers,
+                        status = it.eventStatus,
+                        dateStart = it.dateStart,
+                        eventType = it.eventType
+                    )
+                )
             )
         }
     }
